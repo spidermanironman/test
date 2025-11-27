@@ -112,6 +112,191 @@ ColdBootInitPlayerKitAsyncAB.LIZ {
 - `X.ABo.LIZIZ` (SourceFile:393347)
 - `X.Smx.onCreate` (SourceFile:393282)
 
+## 日志时间线分析
+
+### 进程启动时间线
+
+```
+20:30:20.003 - 进程启动 (pid 18153, com.ss.android.ugc.aweme:push)
+20:30:20.174 - ActivityThread 创建并附加
+20:30:21.505 - bindApplication 开始
+20:30:21.948 - handle BIND_APPLICATION
+20:30:22.128 - 配置更新
+20:30:25.668 - Odex 优化完成 (耗时 3050ms)
+20:30:28.782 - 类验证警告
+20:30:32.225 - 库加载
+20:30:34.316 - NPTH (Native Process Thread Hook) 初始化
+20:30:34.382 - NPTH 文件锁操作开始
+20:30:34.475 - NPTH 文件锁竞争 (两个进程同时尝试获取锁)
+20:30:39.518 - KEVA.NATIVE: "byte array do not exist" (Keva 初始化)
+20:30:43.194 - ANR 触发！(Dumping to /data/anr/anr_18153_2025-11-18-20-30-43-193)
+20:30:43.207 - 关键发现: "Blocking file lock found: [16727, 18153]"
+```
+
+### 关键发现
+
+#### 1. 多进程文件锁竞争 ⚠️
+
+**关键日志**:
+```
+行 89398: do_attach:TMonitor start flock, traceepid=16727 traceetid=17023
+行 89401: do_attach:TMonitor start flock, traceepid=18153 traceetid=19097
+行 100159: Blocking file lock found: [16727, 18153]
+```
+
+**问题分析**:
+- **进程 16727** (主进程) 和 **进程 18153** (推送进程) 同时尝试获取文件锁
+- 文件锁路径: `/data/user/0/com.ss.android.ugc.aweme/files/npth/killHistory/proc/18153/0_lock`
+- 两个进程在 `do_attach:TMonitor start flock` 处发生锁竞争
+- 这导致了**死锁或长时间阻塞**
+
+#### 2. NPTH (Native Process Thread Hook) 问题
+
+**相关日志**:
+```
+行 89133: npth-tracee:thread_loop new lock file=/data/user/0/com.ss.android.ugc.aweme/files/npth/killHistory/proc/18153/0_lock
+行 89134: do_attach_request:send attach sig to tracer pid=18153 tracertid=19097
+行 89135: do_attach_request:success handled, now my tracerpid=16727 tracertid=17023
+```
+
+**问题**:
+- NPTH 是一个用于进程监控和 ANR 检测的 Native 库
+- 在初始化时，两个进程（主进程和推送进程）都在尝试建立监控关系
+- 文件锁竞争发生在 NPTH 的初始化阶段
+
+#### 3. Keva 初始化时机
+
+**相关日志**:
+```
+行 94203: KEVA.NATIVE: byte array do not exist
+```
+
+**时间点**: 20:30:39.518 (在文件锁竞争之后)
+
+**分析**:
+- Keva 初始化发生在 NPTH 文件锁竞争期间
+- 主线程在等待文件锁时，可能触发了 Keva 的懒加载初始化
+- 这进一步加剧了阻塞
+
+#### 4. 进程关系
+
+- **PID 16727**: 主进程 (`com.ss.android.ugc.aweme`)
+- **PID 18153**: 推送进程 (`com.ss.android.ugc.aweme:push`)
+- 两个进程都需要访问相同的 NPTH 文件锁
+
+## 根本原因分析
+
+### 主要原因：多进程文件锁死锁
+
+1. **NPTH 初始化冲突**:
+   - 主进程 (16727) 和推送进程 (18153) 同时启动
+   - 两个进程都尝试初始化 NPTH 并获取文件锁
+   - 文件锁路径冲突导致死锁
+
+2. **主线程阻塞链**:
+   ```
+   Application.onCreate
+     └─> NPTH 初始化 (等待文件锁) ← 死锁点
+         └─> Keva 懒加载初始化 (在等待期间触发)
+             └─> KevaImpl.getRepoImpl (同步 I/O 操作)
+                 └─> 进一步阻塞主线程
+   ```
+
+3. **时间线问题**:
+   - 20:30:34 - 文件锁竞争开始
+   - 20:30:39 - Keva 初始化（此时仍在等待锁）
+   - 20:30:43 - ANR 触发（阻塞超过 5 秒）
+
+## 解决方案
+
+### 方案1: 修复 NPTH 多进程初始化（优先）
+
+**问题**: NPTH 在多进程环境下存在文件锁竞争
+
+**解决**:
+```kotlin
+// 1. 使用进程名区分锁文件
+val lockFile = if (isMainProcess) {
+    File(context.filesDir, "npth/killHistory/proc/$pid/main_lock")
+} else {
+    File(context.filesDir, "npth/killHistory/proc/$pid/${processName}_lock")
+}
+
+// 2. 添加超时机制
+val lock = tryLockWithTimeout(lockFile, timeout = 3_000) // 3秒超时
+if (lock == null) {
+    Log.w(TAG, "Failed to acquire NPTH lock, skipping initialization")
+    return
+}
+
+// 3. 使用文件锁而非 flock（如果可能）
+```
+
+### 方案2: 延迟 NPTH 初始化
+
+```kotlin
+// 不在 Application.onCreate 中初始化 NPTH
+// 改为在后台线程或延迟初始化
+Handler(Looper.getMainLooper()).postDelayed({
+    CoroutineScope(Dispatchers.IO).launch {
+        initializeNPTH()
+    }
+}, 100) // 延迟 100ms，让主进程先完成初始化
+```
+
+### 方案3: 进程间协调
+
+```kotlin
+// 主进程优先初始化，推送进程等待
+if (isMainProcess) {
+    initializeNPTH()
+} else {
+    // 推送进程等待主进程完成
+    waitForMainProcessNPTHInitialization()
+}
+```
+
+### 方案4: 异步初始化 Keva（配合方案1）
+
+即使解决了 NPTH 问题，Keva 初始化仍应异步化：
+
+```kotlin
+// 使用协程异步初始化
+CoroutineScope(Dispatchers.IO).launch {
+    Keva.getRepo(...)
+}
+```
+
+## 性能影响
+
+- **总阻塞时间**: 约 9 秒（20:30:34 - 20:30:43）
+- **文件锁竞争**: 两个进程同时尝试获取锁，导致死锁
+- **ANR 触发**: 主线程阻塞超过 5 秒，触发 ANR
+- **CPU 时间**: 72ms 用户时间 + 64ms 系统时间（实际阻塞主要在等待 I/O 和文件锁）
+
+## 相关代码位置
+
+### NPTH 相关
+- NPTH Native 库初始化代码
+- 文件锁路径: `/data/user/0/com.ss.android.ugc.aweme/files/npth/killHistory/proc/{pid}/{lock_file}`
+
+### Keva 相关
+- `com.bytedance.keva.KevaImpl.getRepoImpl` (SourceFile:67502090)
+- `com.ss.android.ugc.aweme.experiment.ColdBootInitPlayerKitAsyncAB.LIZ` (SourceFile:131074)
+
+### 应用初始化
+- `X.Smx.onCreate` (SourceFile:393282)
+- `com.ss.android.ugc.aweme.app.host.AwemeHostApplication.onCreate`
+
 ## 总结
 
-这是一个典型的**主线程阻塞**问题，发生在应用启动阶段。核心原因是同步初始化存储库（Keva）时执行了耗时的 I/O 操作。建议将初始化操作移到后台线程，或优化初始化逻辑以减少阻塞时间。
+这是一个**多进程文件锁死锁**问题，而非单纯的 Keva 初始化阻塞：
+
+1. **直接原因**: NPTH (Native Process Thread Hook) 在多进程环境下发生文件锁竞争
+2. **触发条件**: 主进程和推送进程同时启动并尝试初始化 NPTH
+3. **阻塞链**: 文件锁死锁 → 主线程阻塞 → Keva 懒加载触发 → 进一步阻塞 → ANR
+
+**优先解决方案**: 
+1. 修复 NPTH 的多进程文件锁竞争问题（添加超时、进程区分、锁文件分离）
+2. 将 Keva 初始化改为异步
+3. 优化进程启动顺序，避免同时初始化 NPTH
