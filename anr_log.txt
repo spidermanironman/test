@@ -1,0 +1,285 @@
+Subject: Input dispatching timed out (a1e7783 com.tencent.KiHan/com.tencent.KiHan.MainActivity is not responding. Waited 5000ms for FocusEvent(hasFocus=false)).
+RssHwmKb: 1757092
+RssKb: 1702144
+RssAnonKb: 1243768
+RssShmemKb: 16256
+VmSwapKb: 169400
+
+
+--- CriticalEventLog ---
+capacity: 20
+timestamp_ms: 1763976831576
+window_ms: 300000
+
+Foreground: Yes
+Process uptime: 3769s
+----- dumping pid: 19671 at 102365574
+libdebuggerd_client: failed to read status response from tombstoned: timeout reached?
+
+----- Waiting Channels: pid 19671 at 2025-11-24 17:33:51.562387795+0800 -----
+Cmd line: com.tencent.KiHan
+
+sysTid=19671     futex_wait_queue
+sysTid=19676     do_sigtimedwait
+sysTid=19677     pipe_read
+sysTid=19678     futex_wait_queue
+sysTid=19679     futex_wait_queue
+sysTid=19680     futex_wait_queue
+sysTid=19681     futex_wait_queue
+sysTid=19682     futex_wait_queue
+sysTid=19683     binder_thread_read
+sysTid=19684     binder_thread_read
+sysTid=19686     binder_thread_read
+sysTid=19688     do_epoll_wait
+sysTid=19689     binder_thread_read
+sysTid=19691     do_epoll_wait
+sysTid=19692     do_epoll_wait
+sysTid=19695     futex_wait_queue
+sysTid=19984     do_epoll_wait
+sysTid=19988     do_epoll_wait
+sysTid=19991     do_epoll_wait
+sysTid=19992     __arm64_sys_nanosleep
+sysTid=19995     __arm64_sys_nanosleep
+sysTid=19996     do_epoll_wait
+sysTid=19998     unix_stream_read_generic
+sysTid=20002     futex_wait_queue
+sysTid=20003     binder_thread_read
+sysTid=20006     futex_wait_queue
+sysTid=20009     futex_wait_queue
+sysTid=20019     futex_wait_queue
+sysTid=20020     futex_wait_queue
+sysTid=20021     futex_wait_queue
+sysTid=20022     futex_wait_queue
+sysTid=20025     do_epoll_wait
+sysTid=20026     futex_wait_queue
+sysTid=20027     futex_wait_queue
+sysTid=20028     futex_wait_queue
+sysTid=20029     futex_wait_queue
+sysTid=20030     futex_wait_queue
+sysTid=20031     futex_wait_queue
+sysTid=20032     futex_wait_queue
+sysTid=20033     futex_wait_queue
+sysTid=20034     __arm64_sys_nanosleep
+sysTid=20044     do_sys_poll
+sysTid=20046     futex_wait_queue
+sysTid=20047     futex_wait_queue
+sysTid=20068     futex_wait_queue
+sysTid=20069     futex_wait_queue
+sysTid=20076     __arm64_sys_nanosleep
+sysTid=20079     do_epoll_wait
+sysTid=20085     futex_wait_queue
+sysTid=20090     futex_wait_queue
+sysTid=20091     do_epoll_wait
+sysTid=20094     futex_wait_queue
+sysTid=20097     futex_wait_queue
+sysTid=20100     do_epoll_wait
+sysTid=20101     binder_thread_read
+sysTid=20108     do_epoll_wait
+sysTid=20127     do_epoll_wait
+sysTid=20138     futex_wait_queue
+sysTid=20139     do_epoll_wait
+sysTid=20150     futex_wait_queue
+sysTid=20151     futex_wait_queue
+sysTid=20152     futex_wait_queue
+sysTid=20153     futex_wait_queue
+sysTid=20154     futex_wait_queue
+sysTid=20155     futex_wait_queue
+sysTid=20157     sigsuspend
+sysTid=20161     futex_wait_queue
+sysTid=20164     futex_wait_queue
+sysTid=20165     futex_wait_queue
+sysTid=20166     futex_wait_queue
+sysTid=20167     futex_wait_queue
+sysTid=20168     futex_wait_queue
+sysTid=20169     sigsuspend
+sysTid=20170     futex_wait_queue
+sysTid=20171     futex_wait_queue
+sysTid=20172     futex_wait_queue
+sysTid=20174     sigsuspend
+sysTid=20175     sigsuspend
+sysTid=20176     futex_wait_queue
+sysTid=20177     futex_wait_queue
+sysTid=20178     sigsuspend
+sysTid=20179     sigsuspend
+sysTid=20180     futex_wait_queue
+sysTid=20181     sigsuspend
+sysTid=20182     futex_wait_queue
+sysTid=20183     sigsuspend
+sysTid=20184     futex_wait_queue
+sysTid=20185     sigsuspend
+sysTid=20186     futex_wait_queue
+sysTid=20187     futex_wait_queue
+sysTid=20188     __arm64_sys_nanosleep
+sysTid=20190     futex_wait_queue
+sysTid=20191     binder_thread_read
+sysTid=20192     futex_wait_queue
+sysTid=20193     futex_wait_queue
+sysTid=20197     0
+sysTid=20199     sigsuspend
+sysTid=20200     futex_wait_queue
+sysTid=20201     futex_wait_queue
+sysTid=20202     futex_wait_queue
+sysTid=20203     futex_wait_queue
+sysTid=20204     futex_wait_queue
+sysTid=20205     futex_wait_queue
+sysTid=20207     0
+sysTid=20210     futex_wait_queue
+sysTid=20211     futex_wait_queue
+sysTid=20213     futex_wait_queue
+sysTid=20214     do_epoll_wait
+sysTid=20237     futex_wait_queue
+sysTid=20239     futex_wait_queue
+sysTid=20240     futex_wait_queue
+sysTid=20241     futex_wait_queue
+sysTid=20242     futex_wait_queue
+sysTid=20243     futex_wait_queue
+sysTid=20244     futex_wait_queue
+sysTid=20245     futex_wait_queue
+sysTid=20246     futex_wait_queue
+sysTid=20247     futex_wait_queue
+sysTid=20248     do_epoll_wait
+sysTid=20249     futex_wait_queue
+sysTid=20250     futex_wait_queue
+sysTid=20254     do_epoll_wait
+sysTid=20261     sigsuspend
+sysTid=20262     sigsuspend
+sysTid=20263     sigsuspend
+sysTid=20264     sigsuspend
+sysTid=20265     sigsuspend
+sysTid=20268     sigsuspend
+sysTid=20270     do_epoll_wait
+sysTid=20271     do_epoll_wait
+sysTid=20272     do_epoll_wait
+sysTid=20273     do_select
+sysTid=20274     do_epoll_wait
+sysTid=20278     __arm64_sys_nanosleep
+sysTid=20279     futex_wait_queue
+sysTid=20280     do_epoll_wait
+sysTid=20287     futex_wait_queue
+sysTid=20288     futex_wait_queue
+sysTid=20290     futex_wait_queue
+sysTid=20291     futex_wait_queue
+sysTid=20292     futex_wait_queue
+sysTid=20293     futex_wait_queue
+sysTid=20294     futex_wait_queue
+sysTid=20295     do_epoll_wait
+sysTid=20326     do_epoll_wait
+sysTid=20327     futex_wait_queue
+sysTid=20328     futex_wait_queue
+sysTid=20388     futex_wait_queue
+sysTid=20430     futex_wait_queue
+sysTid=20431     futex_wait_queue
+sysTid=20432     futex_wait_queue
+sysTid=20454     __arm64_sys_nanosleep
+sysTid=20455     __arm64_sys_nanosleep
+sysTid=20597     binder_thread_read
+sysTid=20601     sigsuspend
+sysTid=20616     sigsuspend
+sysTid=20641     futex_wait_queue
+sysTid=20648     futex_wait_queue
+sysTid=20649     do_select
+sysTid=20650     futex_wait_queue
+sysTid=20657     futex_wait_queue
+sysTid=20658     futex_wait_queue
+sysTid=20660     0
+sysTid=20698     binder_thread_read
+sysTid=20699     binder_thread_read
+sysTid=20721     __arm64_sys_nanosleep
+sysTid=20722     futex_wait_queue
+sysTid=20730     do_epoll_wait
+sysTid=20732     futex_wait_queue
+sysTid=20733     do_epoll_wait
+sysTid=20737     futex_wait_queue
+sysTid=20744     do_epoll_wait
+sysTid=20746     do_epoll_wait
+sysTid=20750     do_epoll_wait
+sysTid=20751     futex_wait_queue
+sysTid=20752     futex_wait_queue
+sysTid=20753     futex_wait_queue
+sysTid=20754     futex_wait_queue
+sysTid=20755     do_epoll_wait
+sysTid=20756     futex_wait_queue
+sysTid=20770     futex_wait_queue
+sysTid=20771     futex_wait_queue
+sysTid=20772     futex_wait_queue
+sysTid=20773     futex_wait_queue
+sysTid=20774     do_epoll_wait
+sysTid=20775     futex_wait_queue
+sysTid=20776     futex_wait_queue
+sysTid=20778     futex_wait_queue
+sysTid=20779     do_epoll_wait
+sysTid=20781     futex_wait_queue
+sysTid=20785     futex_wait_queue
+sysTid=20786     futex_wait_queue
+sysTid=20792     futex_wait_queue
+sysTid=20793     do_epoll_wait
+sysTid=20796     futex_wait_queue
+sysTid=20806     futex_wait_queue
+sysTid=20810     __arm64_sys_nanosleep
+sysTid=20811     __arm64_sys_nanosleep
+sysTid=20812     __arm64_sys_nanosleep
+sysTid=20813     0
+sysTid=20814     futex_wait_queue
+sysTid=20815     do_epoll_wait
+sysTid=20820     futex_wait_queue
+sysTid=20851     sigsuspend
+sysTid=20884     do_select
+sysTid=20910     futex_wait_queue
+sysTid=20911     __arm64_sys_nanosleep
+sysTid=21544     binder_thread_read
+sysTid=23558     futex_wait_queue
+sysTid=23596     futex_wait_queue
+sysTid=23602     futex_wait_queue
+sysTid=23611     0
+sysTid=16231     futex_wait_queue
+sysTid=16828     sigsuspend
+sysTid=16829     sigsuspend
+sysTid=16862     futex_wait_queue
+
+----- end 19671 -----
+
+
+
+----- pid 19671 at 2025-11-24 17:34:02.191740187+0800 -----
+Cmd line: com.tencent.KiHan
+ABI: 'arm64'
+
+"m.tencent.KiHan" sysTid=19671
+    #00 pc 00000000000affe0  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f0468d2d3a31c553a7103b6114f35dc6)
+    #01 pc 00000000000868d4  /apex/com.android.runtime/lib64/bionic/libc.so (__futex_wait_ex(void volatile*, bool, int)+80) (BuildId: f0468d2d3a31c553a7103b6114f35dc6)
+    #02 pc 000000000008c100  /apex/com.android.runtime/lib64/bionic/libc.so (should_trace()+528) (BuildId: f0468d2d3a31c553a7103b6114f35dc6)
+    #03 pc 000000000008bcec  /apex/com.android.runtime/lib64/bionic/libc.so (trace_begin_internal(char const*)+44) (BuildId: f0468d2d3a31c553a7103b6114f35dc6)
+    #04 pc 000000000008bdf8  /apex/com.android.runtime/lib64/bionic/libc.so (ScopedTrace::ScopedTrace(char const*)+52) (BuildId: f0468d2d3a31c553a7103b6114f35dc6)
+    #05 pc 000000000009ba78  /apex/com.android.runtime/lib64/bionic/libc.so (NonPI::MutexLockWithTimeout(pthread_mutex_internal_t*, bool, timespec const*)+312) (BuildId: f0468d2d3a31c553a7103b6114f35dc6)
+    #06 pc 00000000000a248c  /apex/com.android.art/lib64/libc++.so (std::__1::mutex::lock()+12) (BuildId: ada37e5198285720b02f7d77fd27626c7782fe29)
+    #07 pc 0000000000030058  /apex/com.android.art/lib64/libartbase.so (art::InitLogging(char**, void (&)(char const*))::LogdLoggerLocked::operator()(android::base::LogId, android::base::LogSeverity, char const*, char const*, unsigned int, char const*) (.__uniq.85101241731209538599761260233789784808)+84) (BuildId: 1eec6c79290019655827418a09471f32)
+    #08 pc 0000000000015240  /apex/com.android.art/lib64/libbase.so (android::base::SetLogger(std::__1::function<void (android::base::LogId, android::base::LogSeverity, char const*, char const*, unsigned int, char const*)>&&)::$_0::__invoke(__android_log_message const*)+192) (BuildId: b187742dbf65ee9fa18ba657b3eec839)
+    #09 pc 00000000000098ec  /system/lib64/liblog.so (__android_log_buf_write+152) (BuildId: 21de87a3aaac5b4603497dea579336d6)
+    #10 pc 0000000000123dec  /system/lib64/libandroid_runtime.so (android::android_util_Log_println_native(_JNIEnv*, _jobject*, int, int, _jstring*, _jstring*)+272) (BuildId: 384b4941abfa5f29cc2aff9361718722)
+    #11 pc 0000000000b02d7c  /system/framework/arm64/boot-framework.oat (art_jni_trampoline+140) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #12 pc 0000000000852424  /system/framework/arm64/boot-framework.oat (android.view.InsetsSourceConsumer.applyLocalVisibilityOverride+2244) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #13 pc 0000000000865b78  /system/framework/arm64/boot-framework.oat (android.view.InsetsController.onStateChanged+648) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #14 pc 00000000008d29fc  /system/framework/arm64/boot-framework.oat (android.view.ViewRootImpl.onInsetsStateChanged+220) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #15 pc 00000000008c41b4  /system/framework/arm64/boot-framework.oat (android.view.ViewRootImpl$W.insetsControlChanged+692) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #16 pc 00000000003facec  /system/framework/arm64/boot-framework.oat (android.app.servertransaction.WindowStateInsetsControlChangeItem.execute+172) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #17 pc 00000000003f8070  /system/framework/arm64/boot-framework.oat (android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem+1952) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #18 pc 00000000003f9178  /system/framework/arm64/boot-framework.oat (android.app.servertransaction.TransactionExecutor.executeTransactionItems+344) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #19 pc 00000000003f8cc4  /system/framework/arm64/boot-framework.oat (android.app.servertransaction.TransactionExecutor.execute+884) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #20 pc 00000000002dd1fc  /system/framework/arm64/boot-framework.oat (android.app.ActivityThread$H.handleMessage+2300) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #21 pc 00000000005f9d98  /system/framework/arm64/boot-framework.oat (android.os.Handler.dispatchMessage+152) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #22 pc 000000000069b400  /system/framework/arm64/boot-framework.oat (android.os.Looper.loopOnce+1504) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #23 pc 000000000069ad98  /system/framework/arm64/boot-framework.oat (android.os.Looper.loop+296) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #24 pc 00000000002f2c14  /system/framework/arm64/boot-framework.oat (android.app.ActivityThread.main+1748) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #25 pc 00000000004bbe60  /apex/com.android.art/lib64/libart.so (art_quick_invoke_static_stub+640) (BuildId: af9ec8284b2d47068881f2930e60d5ed)
+    #26 pc 00000000004b2de4  /apex/com.android.art/lib64/libart.so (_jobject* art::InvokeMethod<(art::PointerSize)8>(art::ScopedObjectAccessAlreadyRunnable const&, _jobject*, _jobject*, _jobject*, unsigned long)+1628) (BuildId: af9ec8284b2d47068881f2930e60d5ed)
+    #27 pc 000000000079ed60  /apex/com.android.art/lib64/libart.so (art::Method_invoke(_JNIEnv*, _jobject*, _jobject*, _jobjectArray*) (.__uniq.165753521025965369065708152063621506277)+36) (BuildId: af9ec8284b2d47068881f2930e60d5ed)
+    #28 pc 00000000003acb14  /system/framework/arm64/boot.oat (art_jni_trampoline+116) (BuildId: f14d37fc9ffecf9cdc3d18f2cf009924926db80b)
+    #29 pc 0000000000a3b264  /system/framework/arm64/boot-framework.oat (com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run+116) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #30 pc 0000000000a44ad4  /system/framework/arm64/boot-framework.oat (com.android.internal.os.ZygoteInit.main+5508) (BuildId: 6dbbb8bfb99e9617cd51ab525e54105dea724efd)
+    #31 pc 00000000004bbe60  /apex/com.android.art/lib64/libart.so (art_quick_invoke_static_stub+640) (BuildId: af9ec8284b2d47068881f2930e60d5ed)
+    #32 pc 00000000004baa68  /apex/com.android.art/lib64/libart.so (art::JValue art::InvokeWithVarArgs<art::ArtMethod*>(art::ScopedObjectAccessAlreadyRunnable const&, _jobject*, art::ArtMethod*, std::__va_list)+916) (BuildId: af9ec8284b2d47068881f2930e60d5ed)
+    #33 pc 0000000000812fa4  /apex/com.android.art/lib64/libart.so (art::JNI<true>::CallStaticVoidMethodV(_JNIEnv*, _jclass*, _jmethodID*, std::__va_list)+180) (BuildId: af9ec8284b2d47068881f2930e60d5ed)
+    #34 pc 000000000010cdcc  /system/lib64/libandroid_runtime.so (_JNIEnv::CallStaticVoidMethod(_jclass*, _jmethodID*, ...)+108) (BuildId: 384b4941abfa5f29cc2aff9361718722)
+    #35 pc 00000000001387e0  /system/lib64/libandroid_runtime.so (android::AndroidRuntime::start(char const*, android::Vector<android::String8> const&, bool)+1020) (BuildId: 384b4941abfa5f29cc2aff9361718722)
+    #36 pc 0000000000002718  /system/bin/app_process64 (main+1624) (BuildId: 9d1c8ac843cff429ce808524242c9a73)
+    #37 pc 0000000000082d60  /apex/com.android.runtime/lib64/bionic/libc.so (__libc_init+124) (BuildId: f0468d2d3a31c553a7103b6114f35dc6)
