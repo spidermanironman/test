@@ -1,0 +1,38 @@
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -XX,XX +XX,XX @@
+ #include <linux/mm.h>
+ #include <linux/sched.h>
++#include <linux/ktime.h>
++#include <linux/timekeeping.h>
+ 
+ /**
+  * mm_vmscan_direct_reclaim - 直接内存回收
+@@ -XXX,XXX +XXX,XXX @@ unsigned long mm_vmscan_direct_reclaim(gfp_t gfp_mask, int order,
+ 				       int nid, nodemask_t *nodemask,
+ 				       bool may_writepage)
+ {
++	ktime_t start_time, end_time;
++	s64 duration_ns;
+ 	unsigned long nr_reclaimed;
+ 
++	/* 记录开始时间 */
++	start_time = ktime_get();
++
+ 	/* 原有的内存回收逻辑 */
+ 	nr_reclaimed = do_try_to_free_pages(...);
+ 
++	/* 记录结束时间并计算耗时 */
++	end_time = ktime_get();
++	duration_ns = ktime_to_ns(ktime_sub(end_time, start_time));
++
++	/* 打印耗时日志 */
++	pr_info("mm_vmscan_direct_reclaim: completed in %lld ns (%lld.%03lld ms), "
++		"gfp_mask=0x%x, order=%d, nid=%d, reclaimed=%lu pages\n",
++		duration_ns,
++		duration_ns / NSEC_PER_MSEC,
++		(duration_ns % NSEC_PER_MSEC) / NSEC_PER_USEC,
++		gfp_mask, order, nid, nr_reclaimed);
++
+ 	return nr_reclaimed;
+ }
