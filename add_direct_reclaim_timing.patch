@@ -1,0 +1,35 @@
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index xxxxxxx..xxxxxxx 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -XX,XX +XX,XX @@
+ #include <linux/sched.h>
+ #include <linux/time.h>
++#include <linux/trace_clock.h>
+ 
+ // ... 其他头文件 ...
+ 
+@@ -XXXX,XX +XXXX,XX @@ unsigned long mm_vmscan_direct_reclaim(gfp_t gfp_mask, int order,
+                                        nodemask_t *nodemask,
+                                        int alloc_flags, struct alloc_context *ac)
+ {
+     unsigned long nr_reclaimed;
++    u64 start_time, end_time, duration_ns;
++    unsigned long duration_ms;
++
++    // 记录开始时间
++    start_time = local_clock();
+     
+     // ... 原有实现代码 ...
+     
++    // 记录结束时间并计算耗时
++    end_time = local_clock();
++    duration_ns = end_time - start_time;
++    duration_ms = duration_ns / NSEC_PER_MSEC;
++    
++    // 打印耗时日志
++    trace_printk("mm_vmscan_direct_reclaim: duration=%lu ms, order=%d, gfp_mask=0x%x, reclaimed=%lu pages, pid=%d, comm=%s\n",
++                 duration_ms, order, gfp_mask, nr_reclaimed, current->pid, current->comm);
++    
+     return nr_reclaimed;
+ }
