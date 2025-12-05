@@ -1,0 +1,49 @@
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index xxxxxxx..xxxxxxx 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -XX,XX +XX,XX @@
+ #include <linux/mm_inline.h>
+ #include <linux/pagevec.h>
+ #include <linux/backing-dev.h>
++#include <linux/ktime.h>
++#include <linux/sched.h>
++#include <linux/sched/task.h>
+ #include <trace/events/vmscan.h>
+ 
+@@ -XXXX,XX +XXXX,XX @@ unsigned long mm_vmscan_direct_reclaim(gfp_t gfp_mask, int order,
+ 				       nodemask_t *nodemask,
+ 				       int priority, struct scan_control *sc)
+ {
+ 	unsigned long nr_reclaimed = 0;
++	ktime_t start_time, end_time;
++	s64 duration_us;
++	unsigned long duration_ms;
++
++	/* 记录 direct reclaim 开始时间 */
++	start_time = ktime_get();
+ 
+ 	/*
+ 	 * 原有的 direct reclaim 逻辑
+ 	 * ... 保持不变 ...
+ 	 */
+ 
++	/* 计算耗时并打印日志 */
++	end_time = ktime_get();
++	duration_us = ktime_to_us(ktime_sub(end_time, start_time));
++	duration_ms = (unsigned long)(duration_us / 1000);
++
++	if (duration_ms > 0 || duration_us > 0) {
++		pr_info("direct_reclaim: pid=%d comm=%s duration=%lu ms (%lld us) order=%d priority=%d reclaimed=%lu pages gfp_mask=0x%x\n",
++			current->pid,
++			current->comm,
++			duration_ms,
++			duration_us,
++			order,
++			priority,
++			nr_reclaimed,
++			gfp_mask);
++	}
++
+ 	return nr_reclaimed;
+ }
