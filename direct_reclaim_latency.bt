@@ -1,0 +1,60 @@
+#!/usr/bin/env bpftrace
+/*
+ * direct_reclaim_latency.bt - 追踪直接内存回收延迟
+ *
+ * 使用方法:
+ *   sudo bpftrace direct_reclaim_latency.bt
+ *
+ * 输出每次 direct reclaim 操作的耗时
+ *
+ * 安装 bpftrace:
+ *   Ubuntu/Debian: sudo apt-get install bpftrace
+ *   CentOS/RHEL:   sudo yum install bpftrace
+ */
+
+BEGIN
+{
+    printf("追踪 direct reclaim 延迟... Ctrl-C 退出\n");
+    printf("%-20s %-16s %-7s %-10s %-12s\n", 
+           "TIME", "COMM", "PID", "ORDER", "LATENCY(us)");
+}
+
+// 记录 direct reclaim 开始时间
+tracepoint:vmscan:mm_vmscan_direct_reclaim_begin
+{
+    @start[tid] = nsecs;
+    @order[tid] = args->order;
+}
+
+// 计算并打印 direct reclaim 耗时
+tracepoint:vmscan:mm_vmscan_direct_reclaim_end
+{
+    $start = @start[tid];
+    if ($start != 0) {
+        $delta_us = (nsecs - $start) / 1000;
+        $ord = @order[tid];
+        
+        printf("%-20s %-16s %-7d %-10d %-12d\n",
+               strftime("%Y-%m-%d %H:%M:%S", nsecs),
+               comm,
+               pid,
+               $ord,
+               $delta_us);
+        
+        // 统计延迟直方图
+        @latency_us = hist($delta_us);
+        
+        delete(@start[tid]);
+        delete(@order[tid]);
+    }
+}
+
+END
+{
+    printf("\n--- Direct Reclaim 延迟分布 (微秒) ---\n");
+    print(@latency_us);
+    
+    clear(@start);
+    clear(@order);
+    clear(@latency_us);
+}
