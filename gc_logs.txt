@@ -1,0 +1,7 @@
+    4952  11-17 16:50:55.163741  9225 10299 I com.tencent.mm: Alloc concurrent copying GC freed 362KB AllocSpace bytes, 5(148KB) LOS objects, 14% free,549MB(M:180MB,L:368MB)/645MB, paused 149us,277us total 2.002s
+    5078  11-17 16:50:55.506993  9225 10201 I com.tencent.mm: Alloc concurrent copying GC freed 963KB AllocSpace bytes, 5(120KB) LOS objects, 14% free,549MB(M:181MB,L:368MB)/645MB, paused 105us,50us total 342.486ms
+    5120  11-17 16:50:55.874951  9225 10290 I com.tencent.mm: Alloc concurrent copying GC freed 877KB AllocSpace bytes, 16(436KB) LOS objects, 14% free,548MB(M:180MB,L:368MB)/644MB, paused 158us,53us total 367.572ms
+    5281  11-17 16:50:57.478125  9225 10299 I com.tencent.mm: Alloc concurrent copying GC freed 573KB AllocSpace bytes, 4(132KB) LOS objects, 14% free,549MB(M:180MB,L:368MB)/645MB, paused 189us,183us total 1.602s
+    5500  11-17 16:50:57.864566  9225 24073 I com.tencent.mm: Alloc concurrent copying GC freed 602KB AllocSpace bytes, 10(236KB) LOS objects, 14% free,549MB(M:180MB,L:368MB)/645MB, paused 250us,53us total 385.381ms
+    5686  11-17 16:50:59.975753  9225  9225 I com.tencent.mm: Alloc concurrent copying GC freed 515KB AllocSpace bytes, 8(216KB) LOS objects, 14% free,549MB(M:180MB,L:368MB)/645MB, paused 128us,260us total 2.109s
+    5974  11-17 16:51:00.400038  9225 10290 I com.tencent.mm: Alloc concurrent copying GC freed 188KB AllocSpace bytes, 0(0B) LOS objects, 14% free,549MB(M:180MB,L:368MB)/645MB, paused 58us,274us total 423.255ms
